@@ -1,2 +1,3 @@
 # readyblocks-blocks
-Blocks and common action and event templates for ReadyBlocks
+
+Blocks and common block templates for ReadyBlocks
