@@ -30,7 +30,7 @@ RUN [ "yarn", "install", "--production", "--non-interactive", "--pure-lockfile" 
 EXPOSE 3000/tcp
 
 # Image metadata
-LABEL name="readyblocks-action-base" version="1.0.0-alpha.0" maintainer="dhellstern@outlook.com"
+LABEL name="readyblocks-template-base" version="1.0.0-alpha.0" maintainer="dhellstern@outlook.com"
 
 WORKDIR /
 

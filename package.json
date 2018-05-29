@@ -1,14 +1,11 @@
 {
   "name": "readyblocks-blocks",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.0",
   "description": "Blocks and common block templates for ReadyBlocks",
   "main": "lib/index.js",
   "repository": "git@github.com:readyblocks/readyblocks-blocks.git",
   "author": "dhellstern <dhellstern@outlook.com>",
   "license": "MIT",
-  "bin": {
-    "readyblocks-handler": "./dist/app.js"
-  },
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
