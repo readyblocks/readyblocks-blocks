@@ -1,0 +1,10 @@
+# test coverage files
+.nyc_output/
+coverage.lcov
+
+# compiled files
+dist/
+
+# yarn files
+node_modules/
+yarn-error.log
