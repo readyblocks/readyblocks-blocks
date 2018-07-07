@@ -1,0 +1,56 @@
+{
+  "name": "readyblocks-blocks",
+  "version": "1.0.0-alpha.0",
+  "description": "Blocks and common block templates for ReadyBlocks",
+  "main": "lib/index.js",
+  "repository": "git@github.com:readyblocks/readyblocks-blocks.git",
+  "author": "dhellstern <dhellstern@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "test": "standard && nyc mocha --require babel-core/register lib/**.spec.js",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-runtime",
+      "transform-async-to-generator"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "codecov": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^11.8.0",
+    "on-build-webpack": "^0.1.0",
+    "sinon": "^5.0.10",
+    "standard": "^11.0.1",
+    "supertest": "^3.1.0",
+    "webpack": "^4.10.0",
+    "webpack-cli": "^2.1.4",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  }
+}

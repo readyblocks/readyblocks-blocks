@@ -1,0 +1,84 @@
+build:
+  image: &image node:8
+  before_script:
+    - yarn install
+  script:
+    - yarn build
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - node_modules/
+  artifacts:
+    name: "$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA"
+    paths:
+      - dist/
+      - node_modules/
+    when: always
+    expire_in: 2 weeks
+  stage: build
+
+test:
+  image: *image
+  dependencies:
+    - build
+  script:
+    - yarn test
+  artifacts:
+    paths:
+      - .nyc_output/
+    expire_in: 2 weeks
+  coverage: /All files\s*?\|\s*?(\d+\.?\d*)\s*?\|/
+  stage: test
+
+coverage:
+  image: *image
+  dependencies:
+    - test
+    - build
+  script:
+    - yarn coverage
+  allow_failure: true
+  environment: CodeCov
+  stage: deploy
+
+gitlab:
+  image: *image
+  dependencies:
+    - build
+  script:
+    - echo Not implemented
+  when: manual
+  allow_failure: true
+  environment: GitLab Releases
+  stage: deploy
+  only:
+    - master
+    - tags
+
+docker:
+  image: docker:latest
+  dependencies:
+    - build
+  services:
+    - docker:dind
+  variables:
+    CONTAINER_IMAGE: registry.gitlab.com/readyblocks/blocks/readyblocks-action-base
+    DOCKER_DRIVER: overlay2
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+  script:
+    - docker pull $CONTAINER_IMAGE:latest || true
+    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:${CI_COMMIT_SHA:0:7} --tag $CONTAINER_IMAGE:latest .
+    - docker push $CONTAINER_IMAGE
+  when: manual
+  allow_failure: true
+  environment: GitLab Registry
+  stage: deploy
+  only:
+    - master
+    - tags
+
+stages:
+  - build
+  - test
+  - deploy

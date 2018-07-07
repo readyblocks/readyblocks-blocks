@@ -1,0 +1,5 @@
+**
+!lib/
+!package.json
+!yarn.lock
+!webpack.config.babel.js
